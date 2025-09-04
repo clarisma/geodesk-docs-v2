@@ -6,7 +6,7 @@ parent: GOL Utility
 nav-order: 0
 ---
 
-<command name="build">
+<doc-command name="build">
 
 Creates a new feature library from an OpenStreetMap data file.
 
@@ -43,7 +43,7 @@ The resulting GOL itself will only be 30% to 50% larger than the planet file (Th
 
 ## Options
 
-<option name="areas">
+<doc-option name="areas">
 
 The tags that determine whether a closed OSM way is treated as an area or a linear ring. Rules can be specified for one or more keys. A closed way is treated as an area if it fulfills at least one of these rules (or is explicitly tagged `area=yes`), and is *not* tagged `area=no`.
 
@@ -56,7 +56,6 @@ Key rules have the following format:
 </div>
 </div>
 
-
 Multiple key rules and values must be separated by whitespace and/or commas.
 
 Example:
@@ -68,8 +67,8 @@ Example:
 
 The above will cause any closed way tagged `building` (except `building=no`), `barrier=city_wall`, `barrier=ditch` or `man_made` (except `man_made=embankment` or `man_made=no`) to be treated as an area.
 
-</option>
-<option name="levels" short="l" value="list">
+</doc-option>
+<doc-option name="levels" short="l" value="list">
 
 The zoom levels at which tile-tree nodes should be created. Together with [`max-tiles`](#max-tiles) and [`min-tile-density`](#min-tile-density), this setting shapes the tile structure of a GOL.
 
@@ -79,8 +78,8 @@ The zoom levels at which tile-tree nodes should be created. Together with [`max-
 - Fewer zoom levels result in a flatter tree that may yield better query performance, but cause a higher variance in tile sizes.
 - Setting the top zoom level too low may cause the maximum tile size (1 GB uncompressed) to be exceeded. (Very large tiles may also cause the build process to run out of memory.)
 
-</option>
-<option name="max-tiles" short="m" value="number" min="1" max="8000000" default="65535">
+</doc-option>
+<doc-option name="max-tiles" short="m" value="number" min="1" max="8000000" default="65535">
 
 Value: 1 -- 8,000,000 (default: 65,535)
 
@@ -90,8 +89,8 @@ A higher setting is also preferred if you intend to host a tile repository, as a
 
 If this number is set too low, a tile may exceed the maximum size of 1 GB (uncompressed). An unreasonably low setting may also cause the build process to fail with an `OutOfMemoryError`.
 
-</option>
-<option name="max-strings" value="number" min="256" max="65535" default="16384">
+</doc-option>
+<doc-option name="max-strings" value="number" min="256" max="65535" default="16384">
 
 Value: 256 -- 65,535 (default: 16,384)
 
@@ -99,8 +98,8 @@ The maximum number of strings that will be stored in the GOL's Global String Tab
 
 The actual number of strings will be less if fewer strings meet the minimum usage threshold ([`--min-string-usage`](#option-min-string-usage))
 
-</option>
-<option name="min-string-usage" value="number" min="1" max="100000000" default="300">
+</doc-option>
+<doc-option name="min-string-usage" value="number" min="1" max="100000000" default="300">
 
 ### `--min-string-usage` <code><em>&lt;NUMBER&gt;</em></code> {#option-min-string-usage}
 
@@ -110,8 +109,8 @@ Specifies the minimum number of times a string must be used by features (as a ta
 
 See [`--max-strings`](#option-max-strings).
 
-</option>
-<option name="min-tile-density" short="n" value="number" min="1" max="10000000" default="75000">
+</doc-option>
+<doc-option name="min-tile-density" short="n" value="number" min="1" max="10000000" default="75000">
 
 ### `-n`, `--min-tile-density` <code><em>&lt;NUMBER&gt;</em></code> {#option-min-tile-density}
 
@@ -119,7 +118,7 @@ Value: 1 -- 10,000,000 (default: 75,000)
 
 If there are fewer nodes in a tile area than this number, the tile will be omitted, and all features in the tile area will be placed into tiles at lower zoom levels. A lower threshold will result in more tiles, up to the maximum specified by [`--max-tiles`](#option-max-tiles).
 
-</option>
+</doc-option>
 
 ### `-r`, `--rtree-branch-size` <code><em>&lt;NUMBER&gt;</em></code> {#option-rtree-branch-size}
 
@@ -235,4 +234,4 @@ Creative Commons License) -- but in general, you should not override the default
 
 To set properties from the command line, use <code>--property:<i>property</i>=<i>value</i></code> or <code>-p:<i>property</i>=<i>value</i></code>.
 
-</command>
+</doc-command>
