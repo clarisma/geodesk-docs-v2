@@ -5,7 +5,7 @@ parent: GOL Utility
 nav-order: 3
 ---
 
-# `help`
+# `gol help`
 
 Displays documentation for general usage or for a specific command.
 

@@ -67,9 +67,11 @@ Example:
 ```
 
 The above will cause any closed way tagged `building` (except `building=no`), `barrier=city_wall`, `barrier=ditch` or `man_made` (except `man_made=embankment` or `man_made=no`) to be treated as an area.  
+
+
 ### `-l`, `--levels` <code><em>&lt;LIST&gt;</em></code> {#option-levels}
 
-The zoom levels at which tile-tree nodes should be created. Together with [`max-tiles`](#max-tiles) and [`min-tile-density`](#min-tile-density), this setting shapes the tile structure of a GOL.
+The zoom levels at which tile-tree nodes should be created. Together with [`--max-tiles`](#option-max-tiles) and [`--min-tile-density`](#option-min-tile-density), this setting shapes the tile structure of a GOL.
 
 - Zoom levels must be between 0 and 12.
 - The difference between zoom levels must not exceed 3 (e.g. you can specify `0,3,6,9`, but not `0,4,6,12`).

@@ -5,21 +5,24 @@ parent: GOL Utility
 nav-order: 2
 ---
 
-# `copy` ~~0.3~~
+# `gol copy` ~~2.2~~
 
-Copies tiles from one library to another.
+Copies tiles between Libraries and Bundles.
 
 Usage:
 
-    gol copy <source-gol-file> <target-gol-file> [<options>]
+    gol copy <source> <target> [<options>]
 
-- If an area is specified (using [`--bbox`](#option-bbox) or [`--area`]((#option-area)), only the tiles touching that area are copied.
+`<source>` and `<target>` must be of the same type (GOLs or GOBs).
 
-- Missing tiles will be imported from a repository, if one is specified via [`--url`](#option-url).
+- To copy tiles from a GOB into a GOL, use [`gol load`](load.md). 
 
-- To create a backup, or to share a library via a network connection or slow/space-restricted media, use [`save`](save). 
+- To store tiles from a GOL as a GOB, use [`gol save`](save.md)
 
-- If the source and target GOL contain different versions, the target's version is set to the newer version, and all tiles from the older GOL are marked as stale.
+If an area is specified (using [`--bbox`](#option-bbox) or [`--area`]((#option-area)), only the tiles touching that area are copied.
+
+If the source and target GOL contain different versions, the target's version is set to the newer version, and all tiles from the older GOL are marked as stale.
+
 
 ## Options
 

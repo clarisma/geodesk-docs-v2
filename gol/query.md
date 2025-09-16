@@ -9,23 +9,83 @@ permalink: /gol/query
 
 # `gol query`
 
-Prints all features that match the given query to `stdout`, in a variety of formats.
+Outputs all features that match the given query to `stdout`, in a variety of formats. If no query is provided, enters [interactive mode](#interactive-mode), which enables more sophisticated access to the GOL's features.
 
 Usage:
 
-    gol query [<options>] <gol-file> <query>
+    gol query <gol-file> [<query>] [<options>] 
 
-The query must be written in [GOQL](../goql), the Geo-Object Query Language. GOQL is similar to [MapCSS](https://wiki.openstreetmap.org/wiki/MapCSS/0.2), which is used by Mapnik and Overpass to select OSM objects.
+Any query must be written in [GOQL](../goql), the Geo-Object Query Language. GOQL is similar to [MapCSS](https://wiki.openstreetmap.org/wiki/MapCSS/0.2), which is used by Mapnik and Overpass to select OSM objects.
 
 For example:
 
-    gol query geodata/france 
-      na[amenity=fire_station], n[emergency=fire_hydrant]
+    gol query geodata/france \
+      na[amenity=fire_station], n[emergency=fire_hydrant] \
       -b 2.2,48.8,2.5,48.9 -f geojson 
 
 retrieves all fire stations (which can be nodes or areas) and hydrants
 (which only exist as nodes) from the `france.gol` library (stored in the `geodata`
 folder). The features must lie fully or partially inside the specified bounding box (a rectangle that covers metropolitan Paris) and are printed to `stdout` as GeoJSON (*see below*).
+
+## Interactive mode
+
+**Interactive mode** supports complex queries using [GeoDesk for Python](../python). 
+
+<blockquote class="note" markdown="1">
+You will need to install Python. On Windows, required Python modules are downloaded automatically; on Linux and macOS, install them manually via `pip install geodesk2`.
+</blockquote>
+
+For example:
+
+    gol query france
+
+begins interactive mode using `france.gol`.
+
+Let's retrieve the administrative area of Paris:
+
+```python
+>>> paris = france("a[boundary=administrative][admin_level=6][name=Paris]").one
+```
+
+We can query its tags like this:
+
+```python
+>>> paris.population
+2165423
+>>> paris["name:it"]
+'Parigi'
+```
+
+Now, we'll get all named main roads in Paris and count them:
+
+```python
+>>> streets = france("w[highway=primary][name]")(paris)
+>>> streets.count
+27525
+```
+
+Next, we'll get their unique names, sorted alphabetically:
+
+```python
+>>> sorted({s.name for s in streets})
+['Allée de Longchamp', "Allée du Bord de l'Eau", 'Avenue Aristide Briand', ... ]
+```
+
+Let's compute their combined length (in meters):
+
+```python
+>>> round(streets.length)
+235472
+```
+
+Finally, we'll display them on a map:
+
+```python
+>>> streets.map.show()
+```
+
+When you're done, press `Ctrl-Z` followed by `Enter` to return to the shell.
+
 
 ## Options
 
@@ -34,13 +94,13 @@ folder). The features must lie fully or partially inside the specified bounding 
 
 ### `-f`, `--format` <code><em>&lt;TYPE&gt;</em></code> {#option-format}
 
-The [output format](#output-formats) of the results:
+The output format of the results:
 
-`brief` | Prints a per-feature overview (default) 
+`brief` | Prints a per-feature overview (*default*) 
 `count` | Prints only the *number* of features. 
 `csv` | Comma-separated values
 `geojson` / `geojsonl` | GeoJSON ([traditional](https://geojson.org) / [one feature per line](https://stevage.github.io/ndgeojson/))
-`list` | Simple list of IDs (*default*)
+`list` | Simple list of IDs 
 `table` | Simple text-based table
 `wkt` | Well-known text (geometries only)
 `xml` | [OSM-XML](https://wiki.openstreetmap.org/wiki/OSM_XML)
@@ -74,13 +134,13 @@ The geometry of the feature (as <a href="https://en.wikipedia.org/wiki/Well-know
     <tr>
       <td><code>lat</code></td>
       <td>
-          The WGS-84 latitude of the feature's <em>center</em> (see <code>--center</code>). 
+          The WGS-84 latitude of the feature's centroid
       </td>
     </tr>
     <tr>
       <td><code>lon</code></td>
       <td>
-          The WGS-84 longitude of the feature's <em>center</em> (see <code>--center</code>). 
+          The WGS-84 longitude of the feature's centroid
       </td>
     </tr>
     <tr>
@@ -90,23 +150,11 @@ The geometry of the feature (as <a href="https://en.wikipedia.org/wiki/Well-know
           that are not already printed in a column of their own. 
        </td>
     </tr>
-    <tr>
-      <td><code>x</code></td>
-      <td>
-          The Mercator-projected X coordinate of the feature's <em>center</em> (see <code>--center</code>). 
-      </td>
-    </tr>
-    <tr>
-      <td><code>y</code></td>
-      <td>
-          The Mercator-projected Y coordinate of the feature's <em>center</em> (see <code>--center</code>). 
-      </td>
-    </tr>
   </table>
 
-  If `--tags` is omitted, all tags are included in the output.
+If `--keys` is omitted, all tags are included in the output.
 
-  `--tags` is ignored if the requested output format is `count` or `list`.
+`--keys` is ignored for the `count` and `list` formats.
 
 
 {% include gol/option-output.md %}
@@ -115,7 +163,7 @@ The geometry of the feature (as <a href="https://en.wikipedia.org/wiki/Well-know
 
 Value: 0 -- 15 (default: 7)
 
-The coordinate precision (digits after the decimal point) to use.
+The coordinate precision (digits after the decimal point).
 
 <!--
 <div class="language-plaintext highlighter-rouge">
@@ -124,36 +172,6 @@ The coordinate precision (digits after the decimal point) to use.
 
 Applies only to `csv`, `geojson`/`geojsonl` and `wkt`.
 
-
-{% comment %}
-
-## Output Formats
-
-Specified by the [`--format`](#option-format) option.
-
-### `-f=csv` {#format-csv}
-
-Outputs features in table-based form, suitable for import into a spreadsheet
-application or an SQL database.
-
-The first row contains the header, the following rows each represent a single
-feature. Use in conjunction with `--tags` to specify which tags
-should be written.
-
-Columns are separated by a tab character. The first two columns are always
-`t` (the OSM type of the element: `N`, `W`, or `R`) and `id` (the OSM id
-of the element).
-
-If the `--tags` option is not specified, the only other column is `tags`,
-which includes all the features' tags as a comma-separated
-lists of key-value pairs.
-
-Supported options: `f:id`, `f:sort`
-
-### `-f=poly` {#format-poly}
-
-Outputs features in [polygon-file format](https://wiki.openstreetmap.org/wiki/Osmosis/Polygon_Filter_File_Format). Non-polygonal features are omitted.
-The resulting file can be used for the `--area` option in subsequent queries.
-
-{% endcomment %}
-
+{% include gol/option-quiet.md %}
+{% include gol/option-silent.md %}
+{% include gol/option-verbose.md %}

@@ -21,7 +21,7 @@ The basemap and the click/hover behavior of the displayed features can be custom
 
 For example:
 
-  gol map france na[tourism=museum] -a paris.wkt -t {name} -l {website}
+    gol map france na[tourism=museum] -a paris.wkt -t {name} -l {website}
 
 queries `france.gol` and displays all museums in the Paris area (defined in `paris.wkt`). Their names are shown as tooltips. Clicking on a feature will open the museum's website.
 
@@ -46,15 +46,15 @@ The attribution text to display at the bottom of the map. Can be plain text or H
 
 ### `-t`, `--tooltip` [ <code><em>&lt;TEXT&gt;</code> ] {#option-tooltip}
 
-Text to display when user hovers over a feature. `&lt;TEXT&gt;` may be HTML and typically includes template parameters. If `&lt;TEXT&gt;` is omitted, the tooltip displays the feature's tags (Use option `--keys` to control which tags will be included).
+Text to display when user hovers over a feature. `<TEXT>` may be HTML and typically includes template parameters. If `<TEXT>` is omitted, the tooltip displays the feature's tags (Use option `--keys` to control which tags will be included).
 
 ### `-p`, `--popup` [ <code><em>&lt;TEXT&gt;</code> ] {#option-tooltip}
 
-Text to display in a popup when user clicks on a feature. `&lt;TEXT&gt;` may be HTML and typically includes template parameters. If `&lt;TEXT&gt;` is omitted, the popup displays the feature's tags (Use option `--keys` to control which tags will be included). In that case, you can use `--link` to customize the popup's header link, and `--edit` to display an `EDIT` button.
+Text to display in a popup when user clicks on a feature. `<TEXT>` may be HTML and typically includes template parameters. If `<TEXT>` is omitted, the popup displays the feature's tags (Use option `--keys` to control which tags will be included). In that case, you can use `--link` to customize the popup's header link, and `--edit` to display an `EDIT` button.
 
 ### `-l`, `--link` [ <code><em>&lt;URL&gt;</code> ] {#option-link}
 
-Navigates to the given URL (may be a template) when user clicks on a feature. If `&lt;URL&gt;` is omitted, it defaults to `https://www.openstreetmap.org/{type}/{id}`.
+Navigates to the given URL (may be a template) when user clicks on a feature. If `<URL>` is omitted, it defaults to `https://www.openstreetmap.org/{type}/{id}`.
 
 If option `--popup` is specified, this option defines the page that will be opened when the user click's on the popup's header.
 
@@ -62,7 +62,7 @@ If option `--edit` is specified, but not `--popup`, `--link` is ignored.
 
 ### `-e`, `--edit` [ <code><em>&lt;URL&gt;</code> ] {#option-edit}
 
-Navigates to the given URL (may be a template) when user clicks the `EDIT` button in a feature's popup. If `--popup` is not specified, `--edit` takes the place of `--link`. If `&lt;URL&gt;` is omitted, it defaults to `https://www.openstreetmap.org/edit?{type}={id}`.
+Navigates to the given URL (may be a template) when user clicks the `EDIT` button in a feature's popup. If `--popup` is not specified, `--edit` takes the place of `--link`. If `<URL>` is omitted, it defaults to `https://www.openstreetmap.org/edit?{type}={id}`.
 
 
 

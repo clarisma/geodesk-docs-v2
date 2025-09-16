@@ -5,10 +5,9 @@ parent: GOL Utility
 nav-order: 4
 ---
 
-# `info`
+# `gol info`
 
-Provides general statistics about a library. If a bounding box or polygon are specified,
-this command provides additional statistics about that area.
+Provides general statistics about a library. If a bounding box or polygon are specified, this command provides additional statistics about that area.
 
 Usage:
 

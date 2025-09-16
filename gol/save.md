@@ -5,18 +5,18 @@ parent: GOL Utility
 nav-order: 9
 ---
 
-# `save`
+# `save` ~~2.1~~
 
-Exports tiles to a folder.
+Saves tiles from a Geo-Object Library to a Geo-Object Bundle.
 
 Usage:
 
-    gol save <gol-file> <destination> [<options>]
+    gol save <gol-file> <gob-file> [<options>]
 
-- If no area is defined (via [`--area`](#option-area) or [`--bbox`](#option-bbox)),
-  all tiles are exported.
+If no area is defined (via [`--area`](#option-area) or [`--bbox`](#option-bbox)), all tiles are saved.
 
-- Missing tiles will be imported from another repository, if one is specified via [`--url`](#option-url).
+By default, the IDs of untagged nodes that don't belong to relations (i.e. nodes that merely define the geometry of ways) are not saved, resulting in a smaller GOB. To include these IDs, use option [`--waynode-ids`](#option-waynode-ids).
+
 
 ## Options
 
@@ -26,3 +26,7 @@ Usage:
 {% include gol/option-silent.md %}
 {% include gol/option-verbose.md %}
 {% include gol/option-wait.md %}
+
+### `-w`, `--waynode-ids` {#waynode-ids}
+
+Saves the IDs of *all* nodes, including those that are untagged and don't belong to relations. 
