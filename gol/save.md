@@ -24,6 +24,5 @@ Usage:
 {% include gol/option-bbox.md %}
 {% include gol/option-quiet.md %}
 {% include gol/option-silent.md %}
-{% include gol/option-url.md %}
 {% include gol/option-verbose.md %}
 {% include gol/option-wait.md %}

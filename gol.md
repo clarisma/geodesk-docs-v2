@@ -139,10 +139,8 @@ GeoDesk is in **Early Access**. Some commands and options are not yet available 
 
 {% include gol/option-area.md %}
 {% include gol/option-bbox.md %}
-{% include gol/option-new.md %}
 {% include gol/option-output.md %}
 {% include gol/option-quiet.md %}
-{% include gol/option-url.md %}
 {% include gol/option-silent.md %}
 {% include gol/option-verbose.md %}
 {% include gol/option-wait.md %}

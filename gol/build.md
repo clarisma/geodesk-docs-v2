@@ -6,15 +6,15 @@ parent: GOL Utility
 nav-order: 0
 ---
 
-# `build`
+# `gol build`
 
-Creates a new feature library from an OpenStreetMap data file.
+Creates a new Geo-Object Library from an OpenStreetMap data file.
 
 Usage:
 
     gol build [<options>] <gol-file> <source-file>
 
-`<gol-file>` is the name of the library to build. If no extension is given, `.gol` will be added.
+`<gol-file>` is the name of the Library to build. If no extension is given, `.gol` will be added.
 
 `<source-file>` is the file that contains the OpenStreetMap data. Currently, only files in [OSM-PBF format](https://wiki.openstreetmap.org/wiki/PBF_Format) are supported. This format is popular due to its compact size and wide tool support.
 
@@ -43,7 +43,7 @@ The resulting GOL itself will only be 30% to 50% larger than the planet file (Th
 
 ## Options
 
-### <code>--areas</code> {#option-areas}
+### <code>--areas</code> <code><em>&lt;RULES&gt;</em></code> {#option-areas}
 
 The tags that determine whether a closed OSM way is treated as an area or a linear ring. Rules can be specified for one or more keys. A closed way is treated as an area if it fulfills at least one of these rules (or is explicitly tagged `area=yes`), and is *not* tagged `area=no`.
 
@@ -51,7 +51,7 @@ Key rules have the following format:
 
 <div class="language-plaintext highlighter-rouge">
 <div class="highlight">
-<pre class="highlight"><code><i>key</i> [ <b>(</b> <b>only</b>|<b>except</b> <i>value</i>+ <b>)</b> ]
+<pre class="highlight"><code><i>key</i> [ <b>(</b> [ <b>except</b> ] <i>value</i>+ <b>)</b> ]
 </code></pre>
 </div>
 </div>
@@ -63,7 +63,7 @@ Example:
 
 
 ```
---areas "building, barrier (only city_wall, ditch),  man_made (except embankment)   
+--areas "building, barrier (city_wall, ditch),  man_made (except embankment)   
 ```
 
 The above will cause any closed way tagged `building` (except `building=no`), `barrier=city_wall`, `barrier=ditch` or `man_made` (except `man_made=embankment` or `man_made=no`) to be treated as an area.  
@@ -131,99 +131,4 @@ Stores the IDs for all nodes, including untagged nodes that exist solely to defi
 Enables incremental updates to the GOL file (using the [`update`](update.md) command). Setting this option enables [`--waynode-ids`](#option-waynode-ids). It also enables [`--id-indexing`](#option-id-indexing) if the `build` command determines that ID indexes are likely to significantly speed up updating.
 
 {% include gol/option-verbose.md %}
-
-## Build Settings
-
-{% comment %}
-
-### `area-tags`  ~~0.2~~ {#area-tags}
-
-The tags that determine whether a closed OSM way is treated as an area or a linear ring. Rules can be specified for one or more keys. A closed way is treated as an area if it fulfills at least one of these rules (or is explicitly tagged `area=yes`), and is *not* tagged `area=no`.
-
-Key rules have the following format:
-
-<div class="language-plaintext highlighter-rouge">
-<div class="highlight">
-<pre class="highlight"><code><i>key</i> [ <b>(</b> <b>only</b>|<b>except</b> <i>value</i>+ <b>)</b> ]
-</code></pre>
-</div>
-</div>
-
-
-Multiple key rules and values must be separated by whitespace and/or commas.
-
-Example:
-
-
-### `id-indexing` ~~0.3~~ {#id-indexing}
-
-Value: `yes` / `no` (defaults to value of [`updatable`](#updatable))
-
-If enabled, instructs the `build` command to retain the external ID indexes used during building, so incremental updates can be processed faster (`updatable` must be enabled).
-
-In case this option is disabled, the [`update`](/gol/update) command can also re-create these indexes if needed.
-
-{% endcomment %}
-
-### `indexed-keys`
-
-To enhance query performance, GOLs organize features into separate indexes based on their tags. The `index-keys` section specifies which keys should be considered for indexing. The ideal keys for indexing are those that create categories of features (similar to *layers* in a traditional GIS database), such as `highway`, `landuse` or `shop`. As the number of indexes is limited (see [`max-key-indexes`](#max-key-indexes)), multiple keys may be consolidated into one index (This is done automatically on a per-type, per-tile basis). Features whose tags have multiple indexed keys (e.g. `tourism` and `amenity` for a hotel that is also a restaurant) are consolidated with features with the same key, or placed into a separate mixed-key index.
-
-Keys that should always be placed into the same index can be specified as *key-pairs* by placing forward slashes between these keys (useful for rare-but-similar categories like `telecom`/`communication`).
-
-Example:
-
-```
-indexed-keys:
-  amenity
-  building
-  highway
-  natural/geological
-  shop
-```
-
-### `key-index-min-features`
-
-Value: 0 -- 1,000,000 (default: 300)
-
-If there are fewer features in a key index than this number, these features will be consolidated into another index.
-
-Used with [`indexed-keys`](#indexed-keys) and [`max-key-indexes`](#max-key-indexes).
-
-
-### `max-key-indexes`
-
-Value: 0 -- 30 (default: 8)
-
-The maximum number of key-based indexes to create, per feature type (*node*, *way*, *area*, *relation*). A higher number boosts the performance of queries that make use of indexed keys (queries that require the presence of a key/tag). However, a higher number of key indexes may reduce the performance of queries not based on indexed keys. Key indexes are very storage-efficient, so specifying a higher number has a minimal impact on file size.
-
-If the number of key indexes is lower than the number of keys and key-pairs in [`indexed-keys`](#indexed-keys), features with less frequent keys will be consolidated in one or more combined indexes. Index consolidation also happens if the number of features in an index is below [`key-index-min-features`](#key-index-min-features)
-
-Specifying `0` disables key indexing.
-
-
-### `properties`
-
-A section with key-value pairs that are stored as GOL metadata, which are displayed by [`gol info`](/gol/info) and can be read by other applications.
-
-Common properties include:
-
-`generator`   | The program used to create the GOL ("geodesk/gol {{ site.geodesk_version }}")
-`copyright`   | Text indicating the copyright holder of the data ("OpenStreetMap contributors")
-`license`     | The license under which the data is distributed ("Open Database License 1.0")
-`license-url` | Link to the website where the license text can be found ("https://opendatacommons.org/licenses/odbl/1-0/")
-`tileset-url` | The default URL from which tiles can be downloaded or updated (e.g. "https://data.geodesk/world")
-
-<blockquote class="important" markdown="1">
-
-If you wish to distribute tilesets based on OpenStreetMap data, you must do so in accordance
-with the [Open Database License](https://opendatacommons.org/licenses/odbl/1-0/). You can
-use the `build` command to create a GOL from any geodata in OSM-PBF format, so in theory,
-GOLs could contain data from non-OSM sources (or very old OSM datasets distributed under a
-Creative Commons License) -- but in general, you should not override the defaults for
-`copyright`, `license` and `license_url`.
-
-</blockquote>
-
-To set properties from the command line, use <code>--property:<i>property</i>=<i>value</i></code> or <code>-p:<i>property</i>=<i>value</i></code>.
 

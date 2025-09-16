@@ -7,25 +7,22 @@ nav-order: 5
 
 # `load`
 
-Imports tiles into a feature library from a repository.
+Imports tiles into a Geo-Object Library from a Geo-Object Bundle.
 
 Usage:
 
-    gol load <gol-file> [<repository-path>] [<options>]
+    gol load <gol-file> <gob-file>] [<options>]
 
-- You must provide either the `<repository-path>` argument or the [`--url`](#option-url) option. If you specify both, the command will first look for tiles in `<repository-path>`, then download any missing tiles from the given URL. 
+If no area is defined (via [`--area`](#option-area) or [`--bbox`](#option-bbox)), all tiles that aren't already present in the Library are imported from the Bundle.
 
-- If no area is defined (via [`--area`](#option-area) or [`--bbox`](#option-bbox)),
-  all tiles that aren't already present in this library are imported from the repository.
+The Library and the Bundle must have the same tileset ID.
 
 ## Options
 
 {% include gol/option-area.md %}
 {% include gol/option-bbox.md %}
-{% include gol/option-new.md %}
 {% include gol/option-quiet.md %}
 {% include gol/option-silent.md %}
-{% include gol/option-url.md %}
 {% include gol/option-verbose.md %}
 {% include gol/option-wait.md %}
 
