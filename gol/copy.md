@@ -1,7 +1,7 @@
 ---
 layout: default
 title: copy
-parent: GOL Utility
+parent: GOL Tool
 nav-order: 2
 ---
 

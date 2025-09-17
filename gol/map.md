@@ -1,7 +1,7 @@
 ---
 layout: default
 title: map
-parent: GOL Utility
+parent: GOL Tool
 nav-order: 6
 has_toc: false
 permalink: /gol/map

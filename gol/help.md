@@ -1,7 +1,7 @@
 ---
 layout: default
 title: help
-parent: GOL Utility
+parent: GOL Tool
 nav-order: 3
 ---
 

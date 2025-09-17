@@ -1,13 +1,13 @@
 ---
 layout: default
-title: GOL Utility
+title: GOL Tool
 has_children: true
 has_toc: false
 nav_order: 8
 permalink: /gol
 ---
 
-# The `gol` Command-Line Utility
+# The GOL Tool
 
 The `gol` ("Geo-Object Librarian") command-line utility allows you to build, manage, and query [Geo-Object Libraries](/libraries) and Bundles.
 

@@ -2,7 +2,7 @@
 id: query
 layout: default
 title: check
-parent: GOL Utility
+parent: GOL Tool
 nav-order: 1
 ---
 

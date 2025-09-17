@@ -1,7 +1,7 @@
 ---
 layout: default
 title: save
-parent: GOL Utility
+parent: GOL Tool
 nav-order: 9
 ---
 

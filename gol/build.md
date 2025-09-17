@@ -2,7 +2,7 @@
 id: build
 layout: default
 title: build
-parent: GOL Utility
+parent: GOL Tool
 nav-order: 0
 ---
 
