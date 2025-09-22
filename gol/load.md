@@ -11,7 +11,7 @@ Imports tiles into a Geo-Object Library from a Geo-Object Bundle.
 
 Usage:
 
-    gol load <gol-file> <gob-file>] [<options>]
+    gol load <gol-file> <gob-file> [<options>]
 
 If no area is defined (via [`--area`](#option-area) or [`--bbox`](#option-bbox)), all tiles that aren't already present in the Library are imported from the Bundle.
 
