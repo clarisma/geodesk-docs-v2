@@ -44,15 +44,15 @@ The URL of the tileserver which hosts the basemap.
 
 The attribution text to display at the bottom of the map. Can be plain text or HTML, and must be enclosed in double quotes if it contains spaces, pspecial characters or HTML tags.
 
-### `-t`, `--tooltip` [ <code><em>&lt;TEXT&gt;</code> ] {#option-tooltip}
+### `-t`, `--tooltip` [ <code><em>&lt;TEXT&gt;</em></code> ] {#option-tooltip}
 
 Text to display when user hovers over a feature. `<TEXT>` may be HTML and typically includes template parameters. If `<TEXT>` is omitted, the tooltip displays the feature's tags (Use option `--keys` to control which tags will be included).
 
-### `-p`, `--popup` [ <code><em>&lt;TEXT&gt;</code> ] {#option-tooltip}
+### `-p`, `--popup` [ <code><em>&lt;TEXT&gt;</em></code> ] {#option-tooltip}
 
 Text to display in a popup when user clicks on a feature. `<TEXT>` may be HTML and typically includes template parameters. If `<TEXT>` is omitted, the popup displays the feature's tags (Use option `--keys` to control which tags will be included). In that case, you can use `--link` to customize the popup's header link, and `--edit` to display an `EDIT` button.
 
-### `-l`, `--link` [ <code><em>&lt;URL&gt;</code> ] {#option-link}
+### `-l`, `--link` [ <code><em>&lt;URL&gt;</em></code> ] {#option-link}
 
 Navigates to the given URL (may be a template) when user clicks on a feature. If `<URL>` is omitted, it defaults to `https://www.openstreetmap.org/{type}/{id}`.
 
@@ -60,7 +60,7 @@ If option `--popup` is specified, this option defines the page that will be open
 
 If option `--edit` is specified, but not `--popup`, `--link` is ignored.
 
-### `-e`, `--edit` [ <code><em>&lt;URL&gt;</code> ] {#option-edit}
+### `-e`, `--edit` [ <code><em>&lt;URL&gt;</em></code> ] {#option-edit}
 
 Navigates to the given URL (may be a template) when user clicks the `EDIT` button in a feature's popup. If `--popup` is not specified, `--edit` takes the place of `--link`. If `<URL>` is omitted, it defaults to `https://www.openstreetmap.org/edit?{type}={id}`.
 
